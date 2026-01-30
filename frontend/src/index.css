@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+body {
+  @apply bg-white text-black;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+.bg-animated {
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-animated::before,
+.bg-animated::after {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0,0,0,0.08), transparent);
+  border-radius: 50%;
+  animation: float 6s ease-in-out infinite;
+}
+
+.bg-animated::before {
+  top: -100px;
+  left: -100px;
+}
+
+.bg-animated::after {
+  bottom: -100px;
+  right: -100px;
+  animation-delay: 3s;
+}
+
