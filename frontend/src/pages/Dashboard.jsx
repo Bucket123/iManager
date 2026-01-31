@@ -16,39 +16,13 @@ function Dashboard() {
     navigate("/");
   };
 
-//   const handleAddProject = async () => {
-//   const token = localStorage.getItem("token");
 
-//   try {
-//     const response = await fetch("http://localhost:8080/projects/createProject", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: "Bearer " + token
-//       },
-//       body: JSON.stringify({
-//         name: newProjectName
-//       })
-//     });
-
-//     if (!response.ok) {
-//       throw new Error("Failed to create project");
-//     }
-
-//     const createdProject = await response.json();
-
-//     setProjects([...projects, createdProject]);
-//     setNewProjectName("");
-
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
 
   const handleAddProject = async () => {
   try {
     const response = await apiCall(
-      "http://localhost:8080/projects/createProject",
+      //"http://localhost:8080/projects/createProject",
+      `${import.meta.env.VITE_API_URL}/projects/createProject`,
       {
         method: "POST",
         headers: {
@@ -76,41 +50,14 @@ function Dashboard() {
 
 
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-
-  //   if (!token) {
-  //     navigate("/");
-  //     return;
-  //   }
-  //   setLoading(true);
-  //   fetch("http://localhost:8080/projects/getProjects", {
-  //     headers: {
-  //       Authorization: "Bearer " + token
-  //     }
-  //   })
-  //     .then((res) => {
-  //       if (!res.ok) {
-  //         throw new Error("Failed to fetch projects");
-  //       }
-  //       return res.json();
-  //     })
-  //     .then((data) => {
-  //       setProjects(data);
-  //       setLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // }, []);
-
   useEffect(() => {
   const fetchProjects = async () => {
     setLoading(true);
 
     try {
       const response = await apiCall(
-        "http://localhost:8080/projects/getProjects"
+        //"http://localhost:8080/projects/getProjects"
+        `${import.meta.env.VITE_API_URL}/projects/getProjects`
       );
 
       if (!response.ok) {
@@ -131,38 +78,12 @@ function Dashboard() {
 }, []);
 
 
-//   const updateProjectStatus = async (projectId, newStatus) => {
-//   const token = localStorage.getItem("token");
-
-//   try {
-//     const response = await fetch(
-//       `http://localhost:8080/projects/${projectId}/status?status=${newStatus}`,
-//       {
-//         method: "PUT",
-//         headers: {
-//           Authorization: "Bearer " + token
-//         }
-//       }
-//     );
-
-//     const updatedProject = await response.json();
-
-//     setProjects(prev =>
-//       prev.map(p =>
-//         p.id === projectId ? updatedProject : p
-//       )
-//     );
-
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
-
 
 const updateProjectStatus = async (projectId, newStatus) => {
   try {
     const response = await apiCall(
-      `http://localhost:8080/projects/${projectId}/status?status=${newStatus}`,
+      //`http://localhost:8080/projects/${projectId}/status?status=${newStatus}`,
+      `${import.meta.env.VITE_API_URL}projects/${projectId}/status?status=${newStatus}`,
       {
         method: "PUT"
       }
@@ -183,35 +104,11 @@ const updateProjectStatus = async (projectId, newStatus) => {
 
 
 
-
-// const deleteProject = async (projectId) => {
-//   const token = localStorage.getItem("token");
-
-//   try {
-//     await fetch(
-//       `http://localhost:8080/projects/${projectId}`,
-//       {
-//         method: "DELETE",
-//         headers: {
-//           Authorization: "Bearer " + token
-//         }
-//       }
-//     );
-
-//     setProjects(prev =>
-//       prev.filter(p => p.id !== projectId)
-//     );
-
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
-
-
 const deleteProject = async (projectId) => {
   try {
     await apiCall(
-      `http://localhost:8080/projects/${projectId}`,
+      //`http://localhost:8080/projects/${projectId}`,
+      `${import.meta.env.VITE_API_URL}/projects/${projectId}`,
       {
         method: "DELETE"
       }

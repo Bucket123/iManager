@@ -17,49 +17,13 @@ function TaskBoard() {
   const [loading, setLoading] = useState(true);
 
 
-//   const handleAddTask = async () => {
-//   const token = localStorage.getItem("token");
-
-//   if (!newTaskTitle.trim()) return;
-
-//   try {
-//     const response = await fetch(
-//       `http://localhost:8080/projects/${projectId}/tasks/createTask`,
-//       {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//           Authorization: "Bearer " + token
-//         },
-//         body: JSON.stringify({
-//           title: newTaskTitle
-//         })
-//       }
-//     );
-
-//     if (!response.ok) {
-//       throw new Error("Failed to create task");
-//     }
-
-//     const createdTask = await response.json();
-
-//     // 🔥 State update (important line)
-//     setTasks([...tasks, createdTask]);
-
-//     setNewTaskTitle("");
-
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
-
-
 const handleAddTask = async () => {
   if (!newTaskTitle.trim()) return;
 
   try {
     const response = await apiCall(
-      `http://localhost:8080/projects/${projectId}/tasks/createTask`,
+      //`http://localhost:8080/projects/${projectId}/tasks/createTask`,
+      `${import.meta.env.VITE_API_URL}/projects/${projectId}/tasks/createTask`,
       {
         method: "POST",
         headers: {
@@ -86,36 +50,12 @@ const handleAddTask = async () => {
 };
 
 
-// const updateStatus = async (taskId, newStatus) => {
-//   const token = localStorage.getItem("token");
-
-//   try {
-//     const response = await fetch(
-//       `http://localhost:8080/projects/${projectId}/tasks/${taskId}/status?status=${newStatus}`,
-//       {
-//         method: "PUT",
-//         headers: {
-//           Authorization: "Bearer " + token
-//         }
-//       }
-//     );
-
-//     const updatedTask = await response.json();
-
-//     setTasks(tasks.map(t =>
-//       t.id === taskId ? updatedTask : t
-//     ));
-
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
-
 
 const updateStatus = async (taskId, newStatus) => {
   try {
     const response = await apiCall(
-      `http://localhost:8080/projects/${projectId}/tasks/${taskId}/status?status=${newStatus}`,
+      //`http://localhost:8080/projects/${projectId}/tasks/${taskId}/status?status=${newStatus}`,
+      `${import.meta.env.VITE_API_URL}/projects/${projectId}/tasks/${taskId}/status?status=${newStatus}`, 
       {
         method: "PUT"
       }
@@ -133,47 +73,6 @@ const updateStatus = async (taskId, newStatus) => {
     console.error(err);
   }
 };
-
-
-
-// const handleDragEnd = async (result) => {
-//   const { source, destination, draggableId } = result;
-
-//   if (!destination) return;
-
-//   // Agar same column me drop hua
-//   if (
-//     source.droppableId === destination.droppableId
-//   ) return;
-
-//   const taskId = parseInt(draggableId);
-//   const newStatus = destination.droppableId;
-
-//   const token = localStorage.getItem("token");
-
-//   try {
-//     const response = await fetch(
-//       `http://localhost:8080/projects/${projectId}/tasks/${taskId}/status?status=${newStatus}`,
-//       {
-//         method: "PUT",
-//         headers: {
-//           Authorization: "Bearer " + token
-//         }
-//       }
-//     );
-
-//     const updatedTask = await response.json();
-
-//     setTasks(prev =>
-//       prev.map(t =>
-//         t.id === taskId ? updatedTask : t
-//       )
-//     );
-
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
 
 
 
@@ -189,7 +88,8 @@ const handleDragEnd = async (result) => {
 
   try {
     const response = await apiCall(
-      `http://localhost:8080/projects/${projectId}/tasks/${taskId}/status?status=${newStatus}`,
+      //`http://localhost:8080/projects/${projectId}/tasks/${taskId}/status?status=${newStatus}`,
+      `${import.meta.env.VITE_API_URL}/projects/${projectId}/tasks/${taskId}/status?status=${newStatus}`,
       {
         method: "PUT"
       }
@@ -210,34 +110,14 @@ const handleDragEnd = async (result) => {
 
 
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   setLoading(true);
-  //   fetch(`http://localhost:8080/projects/${projectId}/tasks/getTask`, {
-  //     headers: {
-  //       Authorization: "Bearer " + token
-  //     }
-  //   })
-  //     .then((res) => {
-  //       if (!res.ok) {
-  //         throw new Error("Failed to fetch tasks");
-  //       }
-  //       return res.json();
-  //     })
-  //     .then((data) => 
-  //       setTasks(data))
-  //     .catch((err) => console.error(err));
-  //     setLoading(false);
-  // }, [projectId]);
-
-
 useEffect(() => {
   const fetchTasks = async () => {
     setLoading(true);
 
     try {
       const response = await apiCall(
-        `http://localhost:8080/projects/${projectId}/tasks/getTask`
+        //`http://localhost:8080/projects/${projectId}/tasks/getTask`
+        `${import.meta.env.VITE_API_URL}projects/${projectId}/tasks/getTask`
       );
 
       if (!response.ok) {
@@ -259,34 +139,11 @@ useEffect(() => {
 
 
 
-//     const deleteTask = async (taskId) => {
-//   const token = localStorage.getItem("token");
-
-//   try {
-//     await fetch(
-//       `http://localhost:8080/projects/${projectId}/tasks/${taskId}`,
-//       {
-//         method: "DELETE",
-//         headers: {
-//           Authorization: "Bearer " + token
-//         }
-//       }
-//     );
-
-//     setTasks(prev =>
-//       prev.filter(t => t.id !== taskId)
-//     );
-
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
-
-
 const deleteTask = async (taskId) => {
   try {
     await apiCall(
-      `http://localhost:8080/projects/${projectId}/tasks/${taskId}`,
+      //`http://localhost:8080/projects/${projectId}/tasks/${taskId}`,
+      `${import.meta.env.VITE_API_URL}/projects/${projectId}/tasks/${taskId}`, 
       {
         method: "DELETE"
       }
