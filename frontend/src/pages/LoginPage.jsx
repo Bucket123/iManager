@@ -2,16 +2,23 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
+  console.log("API-URL:", import.meta.env.VITE_API_URL);
   const [isRegister, setIsRegister] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  
   const handleSubmit = async () => {
-    const url = isRegister
-      ? "http://localhost:8080/api/v1/auth/register"
-      : "http://localhost:8080/api/v1/auth/login";
+    // const url = isRegister
+    //   ? "http://localhost:8080/api/v1/auth/register"
+    //   : "http://localhost:8080/api/v1/auth/login";
+
+    
+    const url = isRegister 
+    ? `${import.meta.env.VITE_API_URL}/api/v1/auth/register` 
+    : `${import.meta.env.VITE_API_URL}/api/v1/auth/login`;
 
     try {
       const bodyData = isRegister
